@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>🔑Login</h1>
+
+<!--    Successful registration-->
+    <div th:if="${param.registered != null}" class="alert alert-success">
+        ✅Registration has been successful. Please login with your credentials.
+    </div>
+
+    <!--    Successful Logout-->
+    <div th:if="${param.logout != null}" class="alert alert-info">
+        ✅Logged out successfully.
+    </div>
+
+    <!--    Validation errors-->
+    <div th:if="${param.error != null}" class="alert alert-error">
+        ❌ Invalid username or password. Please try again.
+    </div>
+<!--    Login form-->
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username"
+                   id="username" placeholder="Enter username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password"
+                   id="password" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="position: relative; z-index: 99999; pointer-events: auto;">Login</button>
+<!--        Registration link-->
+        <div class="text-center">
+            <p>Don't have an account? <a href="/register" class="link">Register</a></p>
+        </div>
+    </form>
+</div>
+</body>
+</html>

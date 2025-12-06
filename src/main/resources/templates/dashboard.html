@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <h2>📊Dashboard</h2>
+
+
+<!--        Welcome Card-->
+        <div class="welcome-card">
+            <p>Welcome back, <span th:text="${username}">🤚</span></p>
+
+            <div class="user-info">
+                <span class="label">👤Username</span>
+                <span class="value" th:text="${username}"></span>
+            </div>
+
+            <div class="user-info">
+                <span class="label">🎭Role</span>
+                <span class="value" sec:authentication="principal.authorities"></span>
+            </div>
+
+            <div class="user-info">
+                <span class="label">✅Status</span>
+                <span class="value">Authenticated</span>
+            </div>
+
+<!--    Logout form-->
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+
+            <!-- Coming Soon -->
+            <div class="text-center" style="margin-top: 30px;">
+                <p style="color: #7f8c8d;">
+                    🚀 Product management, categories, and inventory features coming soon!
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

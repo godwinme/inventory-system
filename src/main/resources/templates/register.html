@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Inventory System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Create Account</h1>
+
+         <!--        Error Message-->
+
+        <div th:if="${error != null}" class="alert alert-error">
+            ⚠️<span th:text="${error}">Fallback</span>
+        </div>
+
+<!--        Registration Form-->
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" th:field="*{username}" placeholder="Enter username" required>
+                <span class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" th:field="*{password}" placeholder="Enter password" required>
+                <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" th:field="*{email}" placeholder="Enter Email address" required>
+                <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+<!--            <button type="submit" class="btn btn-primary">Register</button>-->
+<!--            <button type="submit" class="btn btn-primary" onclick="console.log('Button clicked!'); return true;">Register</button>-->
+            <button type="submit" class="btn btn-primary" style="position: relative; z-index: 99999; pointer-events: auto;">Register</button>
+        </form>
+    </div>
+</body>
+</html>
