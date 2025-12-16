@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory - Categories</title>
+</head>
+<body>
+<!-- Success message -->
+<div th:if="${success}"
+     style="color: green; padding: 10px; margin: 10px 0; background: #d4edda; border: 1px solid green; border-radius: 4px;">
+    ✅ <span th:text="${success}"></span>
+</div>
+
+<!-- Error message -->
+<div th:if="${error}"
+     style="color: red; padding: 10px; margin: 10px 0; background: #f8d7da; border: 1px solid red; border-radius: 4px;">
+    ⚠️ <span th:text="${error}"></span>
+</div>
+<a th:href="@{/categories/new}">Create new category</a>
+<div class="container">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Created By</th>
+            <th>Updated By</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.description}"></td>
+            <td th:text="${category.createdAt}"></td>
+            <td th:text="${category.createdBy}"></td>
+            <td th:text="${category.updatedBy}"></td>
+            <td th:text="${category.updatedAt}"></td>
+            <th>
+                <a th:href="@{/categories/{id}(id=${category.id})}">Edit</a>
+                <div>
+                    <form th:action="@{/categories/{id}/delete(id=${category.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
