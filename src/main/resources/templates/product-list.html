@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory - Products</title>
+</head>
+<body>
+<div>
+    <a th:href="@{/products/new}">Create new product</a>
+</div>
+<!-- Success message -->
+<div th:if="${success}"
+     style="color: green; padding: 10px; margin: 10px 0; background: #d4edda; border: 1px solid green; border-radius: 4px;">
+    ✅ <span th:text="${success}"></span>
+</div>
+
+<!-- Error message -->
+<div th:if="${error}"
+     style="color: red; padding: 10px; margin: 10px 0; background: #f8d7da; border: 1px solid red; border-radius: 4px;">
+    ⚠️ <span th:text="${error}"></span>
+</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>Available quantity</td>
+        <td>Category</td>
+        <td>Actions</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.availableQuantity}"></td>
+        <td th:text="${product.category.name}"></td>
+        <td>
+            <div><a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a></div>
+            <div>
+                <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
