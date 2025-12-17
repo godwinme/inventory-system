@@ -4,41 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Inventory System</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional custom styles -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-    <div class="container">
-        <h1>🔐 Create Account</h1>
 
-         <!--        Error Message-->
+<body class="bg-light">
 
-        <div th:if="${error != null}" class="alert alert-error">
-            ⚠️<span th:text="${error}">Fallback</span>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-sm p-4" style="max-width: 450px; width: 100%;">
+
+        <h3 class="text-center mb-4">🔐 Create Account</h3>
+
+        <!-- Global Error Message -->
+        <div th:if="${error != null}" class="alert alert-danger">
+            <span th:text="${error}">Error</span>
         </div>
 
-<!--        Registration Form-->
+        <!-- Registration Form -->
         <form th:action="@{/register}" th:object="${user}" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" th:field="*{username}" placeholder="Enter username" required>
-                <span class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{username}"
+                       placeholder="Enter username"
+                       required>
+
+                <div class="text-danger small"
+                     th:if="${#fields.hasErrors('username')}"
+                     th:errors="*{username}">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" th:field="*{password}" placeholder="Enter password" required>
-                <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password"
+                       class="form-control"
+                       th:field="*{password}"
+                       placeholder="Enter password"
+                       required>
+
+                <div class="text-danger small"
+                     th:if="${#fields.hasErrors('password')}"
+                     th:errors="*{password}">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" th:field="*{email}" placeholder="Enter Email address" required>
-                <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email"
+                       class="form-control"
+                       th:field="*{email}"
+                       placeholder="Enter email address"
+                       required>
+
+                <div class="text-danger small"
+                     th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}">
+                </div>
             </div>
-<!--            <button type="submit" class="btn btn-primary">Register</button>-->
-<!--            <button type="submit" class="btn btn-primary" onclick="console.log('Button clicked!'); return true;">Register</button>-->
-            <button type="submit" class="btn btn-primary" style="position: relative; z-index: 99999; pointer-events: auto;">Register</button>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary w-100">
+                Register
+            </button>
+
         </form>
     </div>
+</div>
+
 </body>
 </html>

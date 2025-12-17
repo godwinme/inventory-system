@@ -3,54 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventory - Categories</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- Success message -->
-<div th:if="${success}"
-     style="color: green; padding: 10px; margin: 10px 0; background: #d4edda; border: 1px solid green; border-radius: 4px;">
-    ✅ <span th:text="${success}"></span>
+
+<div class="container my-5">
+    <a th:href="@{/dashboard}" class="text-decoration-none text-secondary mb-3 d-inline-block">
+        ← Back to Dashboard
+    </a>
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Categories</h2>
+        <a th:href="@{/categories/new}" class="btn btn-primary">
+            + Create New Category
+        </a>
+    </div>
+
+    <!-- Success Message -->
+    <div th:if="${success}" class="alert alert-success">
+        ✅ <span th:text="${success}"></span>
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${error}" class="alert alert-danger">
+        ⚠️ <span th:text="${error}"></span>
+    </div>
+
+    <!-- Categories Table -->
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                    <th>Created By</th>
+                    <th>Updated By</th>
+                    <th>Last Updated</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="category : ${categories}">
+                    <td th:text="${category.id}"></td>
+                    <td class="fw-semibold" th:text="${category.name}"></td>
+                    <td th:text="${category.description}"></td>
+                    <td th:text="${category.createdAt}"></td>
+                    <td th:text="${category.createdBy}"></td>
+                    <td th:text="${category.updatedBy}"></td>
+                    <td th:text="${category.updatedAt}"></td>
+
+                    <td class="text-end">
+                        <a th:href="@{/categories/{id}(id=${category.id})}"
+                           class="btn btn-sm btn-outline-primary me-1">
+                            Edit
+                        </a>
+
+                        <form th:action="@{/categories/{id}/delete(id=${category.id})}"
+                              method="post"
+                              class="d-inline">
+                            <button type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Are you sure you want to delete this category?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
 </div>
 
-<!-- Error message -->
-<div th:if="${error}"
-     style="color: red; padding: 10px; margin: 10px 0; background: #f8d7da; border: 1px solid red; border-radius: 4px;">
-    ⚠️ <span th:text="${error}"></span>
-</div>
-<a th:href="@{/categories/new}">Create new category</a>
-<div class="container">
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Created By</th>
-            <th>Updated By</th>
-            <th>Last Updated</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="category : ${categories}">
-            <td th:text="${category.id}"></td>
-            <td th:text="${category.name}"></td>
-            <td th:text="${category.description}"></td>
-            <td th:text="${category.createdAt}"></td>
-            <td th:text="${category.createdBy}"></td>
-            <td th:text="${category.updatedBy}"></td>
-            <td th:text="${category.updatedAt}"></td>
-            <th>
-                <a th:href="@{/categories/{id}(id=${category.id})}">Edit</a>
-                <div>
-                    <form th:action="@{/categories/{id}/delete(id=${category.id})}" method="post">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            </th>
-        </tr>
-        </tbody>
-    </table>
-</div>
 </body>
 </html>
