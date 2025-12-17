@@ -8,6 +8,37 @@
 <div>
     <a th:href="@{/products/new}">Create new product</a>
 </div>
+
+<!-- Add this new section! -->
+<div style="margin: 20px 0; padding: 10px; background: #f0f0f0; border-radius: 4px;">
+    <h3>Filter by Category:</h3>
+    <a th:href="@{/products}">
+        <button style="margin: 5px;">All Products</button>
+    </a>
+    <span th:each="cat : ${categories}">
+        <a th:href="@{/products/category/{id}(id=${cat.id})}">
+            <button style="margin: 5px;" th:text="${cat.name}"></button>
+        </a>
+    </span>
+</div>
+<!-- ADD THIS NEW SECTION: Low Stock Alert Button -->
+<div style="margin: 20px 0;">
+    <a th:href="@{/products/low-stock}">
+        <button style="padding: 10px 20px; background: #ff9800; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            ⚠️ View Low Stock Products
+        </button>
+    </a>
+</div>
+<!-- Show which category is filtered (if any) -->
+<div th:if="${category}" style="padding: 10px; background: #e3f2fd; margin: 10px 0; border-radius: 4px;">
+    <strong>Showing products in category: <span th:text="${category.name}"></span></strong>
+    <a th:href="@{/products}" style="margin-left: 10px;">[Clear filter]</a>
+</div>
+<!-- Show low stock alert banner -->
+<div th:if="${lowStockFlag}" style="padding: 10px; background: #fff3cd; border: 2px solid #ff9800; margin: 10px 0; border-radius: 4px; color: #856404;">
+    <strong>⚠️ LOW STOCK ALERT:</strong> Showing products with quantity below 20 units
+    <a th:href="@{/products}" style="margin-left: 10px; color: #007bff;">[View All Products]</a>
+</div>
 <!-- Success message -->
 <div th:if="${success}"
      style="color: green; padding: 10px; margin: 10px 0; background: #d4edda; border: 1px solid green; border-radius: 4px;">

@@ -1,15 +1,19 @@
 package com.godwin.inventory.controller;
 
+import com.godwin.inventory.models.Category;
 import com.godwin.inventory.models.Product;
 import com.godwin.inventory.service.CategoryService;
 import com.godwin.inventory.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +26,7 @@ public class ProductController {
     @GetMapping
     public String getAllProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "product-list";
     }
 
@@ -61,7 +66,7 @@ public class ProductController {
 
     @PostMapping("/update/{id}")
     public String updateProduct(@Valid @ModelAttribute Product product, BindingResult bindingResult, @PathVariable Long id,
-                                RedirectAttributes redirectAttributes,  Model model) {
+                                RedirectAttributes redirectAttributes, Model model) {
         try {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("categories", categoryService.getAllCategories());
@@ -86,5 +91,23 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
         }
         return "redirect:/products";  // ✅ Move outside try-catch
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public String getProductsByCategory(@PathVariable Long categoryId, Model model) {
+        Category category = categoryService.getCategoryById(categoryId);  // Call once
+        model.addAttribute("products", productService.getProductsByCategory(category));
+        model.addAttribute("category", category);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "product-list";
+    }
+
+    @GetMapping("/low-stock")
+    public String showLowStockProducts(Model model) {
+        List<Product> lowStockProducts = productService.getLowStockProducts(20);
+        model.addAttribute("products", lowStockProducts);
+        model.addAttribute("lowStockFlag", !lowStockProducts.isEmpty());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "product-list";
     }
 }
